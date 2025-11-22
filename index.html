@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>YouTube Channel Analyst</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="index.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <script type="importmap">
+      {
+        "imports": {
+          "@google/genai": "https://esm.sh/@google/genai@^0.14.0",
+          "marked": "https://esm.sh/marked@13.0.0"
+        }
+      }
+    </script>
+    <script type="module" src="index.tsx"></script>
+  </head>
+  <body>
+    <main>
+      <header>
+        <div class="title-container">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 20" class="youtube-logo" aria-hidden="true">
+            <path fill="#FF0000" d="M27.42 3.03s-.28-1.98-.56-2.8C26.1.28 24.58 0 22.42 0H5.58C3.42 0 1.9.28 1.14 1.23c-.28.82-.56 2.8-.56 2.8S0 5.02 0 7.02v5.96c0 2 .56 3.99.56 3.99s.28 1.98.56 2.8c.76.95 2.28 1.23 4.44 1.23h16.84c2.16 0 3.68-.28 4.44-1.23.28-.82.56-2.8.56-2.8s.56-1.99.56-3.99V7.02c0-2-.56-3.99-.56-3.99z"/>
+            <path fill="#FFFFFF" d="M11.2 14.07V5.93L18.62 10l-7.42 4.07z"/>
+          </svg>
+          <h1>YouTube Content Suite</h1>
+        </div>
+        <p>Your AI-powered toolkit for channel analysis and keyword research.</p>
+      </header>
+
+      <nav class="tabs">
+        <button id="analyst-tab" class="tab-button active" role="tab" aria-controls="channel-analyst-panel" aria-selected="true">Channel Analyst</button>
+        <button id="competitor-tab" class="tab-button" role="tab" aria-controls="competitor-panel" aria-selected="false">Competitor Analysis</button>
+        <button id="keyword-tab" class="tab-button" role="tab" aria-controls="keyword-research-panel" aria-selected="false">Keyword Research</button>
+        <button id="optimizer-tab" class="tab-button" role="tab" aria-controls="optimizer-panel" aria-selected="false">Optimizer</button>
+        <button id="script-tab" class="tab-button" role="tab" aria-controls="script-panel" aria-selected="false">Script Writer</button>
+        <button id="thumbnail-tab" class="tab-button" role="tab" aria-controls="thumbnail-panel" aria-selected="false">Thumbnail Analyzer</button>
+        <button id="tag-tab" class="tab-button" role="tab" aria-controls="tag-panel" aria-selected="false">Tag Generator</button>
+        <button id="rank-tracker-tab" class="tab-button" role="tab" aria-controls="rank-tracker-panel" aria-selected="false">Rank Tracker</button>
+      </nav>
+
+      <div id="channel-analyst-panel" class="tab-panel active" role="tabpanel" aria-labelledby="analyst-tab">
+        <div class="input-group">
+          <input type="text" id="channel-input" placeholder="e.g., Marques Brownlee" aria-label="YouTube Channel Name">
+          <button id="analyze-button">Analyze Channel</button>
+        </div>
+      </div>
+
+      <div id="competitor-panel" class="tab-panel" role="tabpanel" aria-labelledby="competitor-tab">
+        <div class="competitor-input-group">
+          <input type="text" id="your-channel-input" placeholder="Your Channel Name (e.g., iJustine)" aria-label="Your Channel Name">
+          <input type="text" id="competitor-channel-input" placeholder="Competitor Channel Name (e.g., UrAvgConsumer)" aria-label="Competitor Channel Name">
+          <button id="compare-button">Compare Channels</button>
+        </div>
+      </div>
+      
+      <div id="keyword-research-panel" class="tab-panel" role="tabpanel" aria-labelledby="keyword-tab">
+        <div class="input-group">
+          <input type="text" id="keyword-input" placeholder="e.g., home gardening tips" aria-label="Keyword Research Topic">
+          <button id="research-button">Research Keywords</button>
+        </div>
+      </div>
+
+      <div id="optimizer-panel" class="tab-panel" role="tabpanel" aria-labelledby="optimizer-tab">
+        <div class="optimizer-input-group">
+            <input type="text" id="topic-input" placeholder="Video Topic or Idea" aria-label="Video Topic or Idea">
+            <input type="text" id="title-input" placeholder="Draft Title (Optional)" aria-label="Draft Title">
+            <textarea id="description-input" placeholder="Draft Description (Optional)" aria-label="Draft Description" rows="4"></textarea>
+            <button id="optimize-button">Optimize</button>
+        </div>
+      </div>
+
+      <div id="script-panel" class="tab-panel" role="tabpanel" aria-labelledby="script-tab">
+        <div class="optimizer-input-group">
+            <input type="text" id="script-topic-input" placeholder="Video Topic" aria-label="Video Topic">
+            <input type="text" id="script-audience-input" placeholder="Target Audience (Optional)" aria-label="Target Audience">
+            <select id="script-tone-select" aria-label="Script Tone">
+                <option value="Casual & Friendly">Casual & Friendly</option>
+                <option value="Professional & Authoritative">Professional & Authoritative</option>
+                <option value="Energetic & Fast-Paced">Energetic & Fast-Paced</option>
+                <option value="Humorous & Entertaining">Humorous & Entertaining</option>
+            </select>
+            <textarea id="script-points-input" placeholder="Key Points / Outline (Optional)" aria-label="Key Points" rows="4"></textarea>
+            <button id="generate-script-button">Generate Script</button>
+        </div>
+      </div>
+
+      <div id="thumbnail-panel" class="tab-panel" role="tabpanel" aria-labelledby="thumbnail-tab">
+          <div class="input-group">
+              <input type="text" id="video-url-input" placeholder="Paste YouTube video URL here" aria-label="YouTube Video URL">
+              <button id="analyze-thumbnail-button">Analyze Thumbnail</button>
+          </div>
+          <div id="thumbnail-preview-container" class="thumbnail-preview"></div>
+      </div>
+
+      <div id="tag-panel" class="tab-panel" role="tabpanel" aria-labelledby="tag-tab">
+        <div class="input-group">
+          <input type="text" id="tag-topic-input" placeholder="e.g., unboxing a new laptop" aria-label="Tag Generator Topic">
+          <button id="generate-tags-button">Generate Tags</button>
+        </div>
+      </div>
+      
+      <div id="rank-tracker-panel" class="tab-panel" role="tabpanel" aria-labelledby="rank-tracker-tab">
+        <div class="rank-tracker-input-group">
+            <input type="text" id="rank-video-url-input" placeholder="YouTube Video URL" aria-label="YouTube Video URL">
+            <input type="text" id="rank-keyword-input" placeholder="Keyword to Track" aria-label="Keyword to Track">
+            <button id="track-rank-button">Track Ranking</button>
+        </div>
+      </div>
+
+      <div id="loader" class="loader" role="status" aria-live="polite" style="display: none;"></div>
+      
+      <!-- Shared result containers -->
+      <div id="channel-header" class="channel-header"></div>
+      <div id="stats-container" class="stats-container"></div>
+      <div id="result-container" class="result-container"></div>
+      <div id="sources-container" class="sources-container"></div>
+    </main>
+  </body>
+</html>
